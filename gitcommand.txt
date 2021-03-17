@@ -1,0 +1,73 @@
+先做初始化
+git init 
+
+注意： github上主分支叫main，本地叫master
+
+然后在github上新建仓库，不要增加readme等文件，按照提示 将github仓库和文件关联
+git remote add origin git@github.com:BIGWangYuDong/Dehaze.git
+
+
+然后
+git branch -M master
+
+第一次将本地的推到github仓库
+git push -u origin master
+之后就可以用
+git push
+
+$ git push 如果当前分支与多个主机存在追踪关系，那么这个时候-u选项会指定一个默认主机，这样后面就可以不加任何参数使用git push。
+
+$ git push -u origin master 上面命令将本地的master分支推送到origin主机，同时指定origin为默认主机，后面就可以不加任何参数使用git push了。
+
+**
+查看当前状态
+git status
+
+加全部更新加到缓存区
+git add . 
+单项加入缓存区
+git add XXX
+
+提交到版本库
+git commit -m '说明'
+
+
+每次最好把自己的提交同步信息拉下来
+git pull origin master
+
+然后记得提交上去
+
+
+新建分支
+git branch XXX
+新建并切换到新分支
+git checkout -b XXX 
+查看当前分支
+git branch
+切换分支
+git checkout XXX
+删除分支
+git branch -d XXX
+
+常见分支：
+    master主干，用来存放最稳定的代码
+    hotfix，用来紧急修改bug的分支
+    release，用来发布上线的分支
+    feature，特性分支，每一个新功能都应该有一个特性分支
+    develop，开发分支，当特性开发完毕后，将特性分支合并到develop分支
+
+合并分支
+git checkout master
+git pull origin master   # 将网上的更新的先更新好
+git merge XXX
+git push origin master
+git branch -d XXX
+
+git pull origin XXX(网上) XXX(本地) # 将网上的分支pull到本地
+
+
+
+
+
+
+

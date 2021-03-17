@@ -1,0 +1,12 @@
+checkpoints/*
+DATA/*
+results/*
+__pycache__
+vgg16.t7
+vgg16.weight
+log
+runs/*
+runner/*
+develop_model/*
+DCNv2*
+
