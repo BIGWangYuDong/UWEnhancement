@@ -280,7 +280,7 @@ from Dehaze.core.Models import build_network
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a detector')
-    parser.add_argument('--config',type=str, default='/home/dong/python-project/Dehaze/configs/try.py',
+    parser.add_argument('--config',type=str, default='/home/dong/python-project/Dehaze/configs/UIEC2Net.py',
                         help='train config file path')
     parser.add_argument('--work_dir', help='the dir to save logs and models,')
     group_gpus = parser.add_mutually_exclusive_group()

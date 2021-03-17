@@ -72,7 +72,7 @@ def parse_args():
                         help="output images path")
 
     parser.add_argument('--config',type=str,
-                        default='/home/dong/python-project/Dehaze/configs/try.py',
+                        default='/home/dong/python-project/Dehaze/configs/UIEC2Net.py',
                         help='train config file path')
     parser.add_argument('--load_from',
                         default='/home/dong/python-project/Dehaze/checkpoints/wyd/New/dehaze_backbone_1/epoch_1000.pth',

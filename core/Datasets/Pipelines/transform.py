@@ -22,7 +22,7 @@ class Resize(object):
         self.keep_ratio = keep_ratio
 
     def __call__(self, results):
-        image, gt = results['image'], results['gt']
+        image = results['image']
         if isinstance(self.img_scale, int):
             h, w = self.img_scale, self.img_scale
         else:
@@ -30,7 +30,9 @@ class Resize(object):
         osize = [h, w]
         transform = transforms.Resize(osize)
         results['image'] = transform(image)
-        results['gt'] = transform(gt)
+        if 'gt' in results:
+            gt = results['gt']
+            results['gt'] = transform(gt)
         return results
 
 
@@ -44,7 +46,7 @@ class RandomCrop(object):
             self.img_scale = img_scale
 
     def __call__(self, results):
-        image, gt = results['image'], results['gt']
+        image = results['image']
         if isinstance(self.img_scale, int):
             th, tw = self.img_scale, self.img_scale
         else:
@@ -59,7 +61,9 @@ class RandomCrop(object):
         j = random.randint(0, w - tw)
 
         results['image'] = F.crop(image, i, j, th, tw)
-        results['gt'] = F.crop(gt, i, j, th, tw)
+        if 'gt' in results:
+            gt = results['gt']
+            results['gt'] = F.crop(gt, i, j, th, tw)
 
 
         return results
@@ -74,14 +78,16 @@ class RandomFlip(object):
             self.flip_ratio = flip_ratio
 
     def __call__(self, results):
-        image, gt = results['image'], results['gt']
+        image = results['image']
         # transform = transforms.RandomHorizontalFlip(p=self.flip_ratio)
         # results['image'] = transform(image)
         # results['gt'] = transform(gt)
         flip_prob = random.random()
         flip_transform = transforms.Compose([RandomHorizontalFlip(flip_prob)])
         results['image'] = flip_transform(image)
-        results['gt'] = flip_transform(gt)
+        if 'gt' in results:
+            gt = results['gt']
+            results['gt'] = flip_transform(gt)
 
         return results
 
@@ -117,8 +123,7 @@ class Pad(object):
         self.mode = mode
 
     def __call__(self, results):
-        image, gt = results['image'], results['gt']
-
+        image = results['image']
         pad_w = int(np.ceil(image.size[0] / self.divisor)) * self.divisor
         pad_h = int(np.ceil(image.size[1] / self.divisor)) * self.divisor
         if self.mode == 'pad':
@@ -129,7 +134,10 @@ class Pad(object):
         else:
             transform = transforms.Resize((pad_h, pad_w))
         results['image'] = transform(image)
-        results['gt'] = transform(gt)
+
+        if 'gt' in results:
+            gt = results['gt']
+            results['gt'] = transform(gt)
         return results
 
 # 再建一个 resize到可整除的
@@ -137,39 +145,19 @@ class Pad(object):
 @PIPELINES.register_module()
 class ImageToTensor(object):
     def __call__(self, results):
-        image, gt = results['image'], results['gt']
+        image = results['image']
         totensor = transforms.ToTensor()
         if torch.cuda.is_available():
             results['image'] = totensor(image).cuda()
-            results['gt'] = totensor(gt).cuda()
         else:
             results['image'] = totensor(image)
-            results['gt'] = totensor(gt)
-        if 'image_flip_lr' in results:
-            image_flip_lr            = results['image_flip_lr']
-            image_rotate_270         = results['image_rotate_270']
-            image_rotate_180         = results['image_rotate_180']
-            image_rotate_90          = results['image_rotate_90']
-            image_flip_lr_rotate_270 = results['image_flip_lr_rotate_270']
-            image_flip_lr_rotate_180 = results['image_flip_lr_rotate_180']
-            image_flip_lr_rotate_90  = results['image_flip_lr_rotate_90']
-            if torch.cuda.is_available():
-                results['image_flip_lr'] = totensor(image_flip_lr).cuda()
-                results['image_rotate_270'] = totensor(image_rotate_270).cuda()
-                results['image_rotate_180'] = totensor(image_rotate_180).cuda()
-                results['image_rotate_90'] = totensor(image_rotate_90).cuda()
-                results['image_flip_lr_rotate_270'] = totensor(image_flip_lr_rotate_270).cuda()
-                results['image_flip_lr_rotate_180'] = totensor(image_flip_lr_rotate_180).cuda()
-                results['image_flip_lr_rotate_90'] = totensor(image_flip_lr_rotate_90).cuda()
-            else:
-                results['image_flip_lr'] = totensor(image_flip_lr)
-                results['image_rotate_270'] = totensor(image_rotate_270)
-                results['image_rotate_180'] = totensor(image_rotate_180)
-                results['image_rotate_90'] = totensor(image_rotate_90)
-                results['image_flip_lr_rotate_270'] = totensor(image_flip_lr_rotate_270)
-                results['image_flip_lr_rotate_180'] = totensor(image_flip_lr_rotate_180)
-                results['image_flip_lr_rotate_90'] = totensor(image_flip_lr_rotate_90)
 
+        if 'gt' in results:
+            gt = results['gt']
+            if torch.cuda.is_available():
+                results['gt'] = totensor(gt).cuda()
+            else:
+                results['gt'] = totensor(gt)
         results['image_id'] = results['image_path'].split('/')[-1].split('.')[0]
         return results
 
@@ -182,25 +170,12 @@ class Normalize(object):
         self.mean = mean
         self.std = std
     def __call__(self, results):
-        image, gt = results['image'], results['gt']
+        image = results['image']
         Normalize = transforms.Normalize(mean=self.mean, std=self.std)
         results['image'] = Normalize(image)
-        results['gt'] = Normalize(gt)
-        if 'image_flip_lr' in results:
-            image_flip_lr = results['image_flip_lr']
-            image_rotate_270 = results['image_rotate_270']
-            image_rotate_180 = results['image_rotate_180']
-            image_rotate_90 = results['image_rotate_90']
-            image_flip_lr_rotate_270 = results['image_flip_lr_rotate_270']
-            image_flip_lr_rotate_180 = results['image_flip_lr_rotate_180']
-            image_flip_lr_rotate_90 = results['image_flip_lr_rotate_90']
-            results['image_flip_lr'] = Normalize(image_flip_lr)
-            results['image_rotate_270'] = Normalize(image_rotate_270)
-            results['image_rotate_180'] = Normalize(image_rotate_180)
-            results['image_rotate_90'] = Normalize(image_rotate_90)
-            results['image_flip_lr_rotate_270'] = Normalize(image_flip_lr_rotate_270)
-            results['image_flip_lr_rotate_180'] = Normalize(image_flip_lr_rotate_180)
-            results['image_flip_lr_rotate_90'] = Normalize(image_flip_lr_rotate_90)
+        if 'gt' in results:
+            gt = results['gt']
+            results['gt'] = Normalize(gt)
         return results
 
 
@@ -223,9 +198,6 @@ class FlipEnsemble(object):
         results['image_flip_lr_rotate_270'] = image.transpose(Image.FLIP_LEFT_RIGHT).transpose(Image.ROTATE_270)
         results['image_flip_lr_rotate_180'] = image.transpose(Image.FLIP_LEFT_RIGHT).transpose(Image.ROTATE_180)
         results['image_flip_lr_rotate_90'] = image.transpose(Image.FLIP_LEFT_RIGHT).transpose(Image.ROTATE_90)
-
-        # results['gt_flip'] = gt.transpose(Image.FLIP_LEFT_RIGHT)
-
         return results
 
 @PIPELINES.register_module()
@@ -238,11 +210,14 @@ class RandomRotate90(object):
             self.ratio = ratio
 
     def __call__(self, results):
-        image, gt = results['image'], results['gt']
+        image = results['image']
         rotate_prob = random.random()
         if rotate_prob < self.ratio:
             results['image'] = image.transpose(Image.ROTATE_90)
-            results['gt'] = gt.transpose(Image.ROTATE_90)
+        if 'gt' in results:
+            gt = results['gt']
+            if rotate_prob < self.ratio:
+                results['gt'] = gt.transpose(Image.ROTATE_90)
         return results
 
 
@@ -256,9 +231,13 @@ class RandomRotate180(object):
             self.ratio = ratio
 
     def __call__(self, results):
-        image, gt = results['image'], results['gt']
+        image = results['image']
         rotate_prob = random.random()
         if rotate_prob < self.ratio:
             results['image'] = image.transpose(Image.ROTATE_180)
-            results['gt'] = gt.transpose(Image.ROTATE_180)
+
+        if 'gt' in results:
+            gt = results['gt']
+            if rotate_prob < self.ratio:
+                results['gt'] = gt.transpose(Image.ROTATE_180)
         return results

@@ -47,10 +47,10 @@ def get_host_info():
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a detector')
     parser.add_argument('--config',type=str,
-                        default='/home/dong/python-project/Dehaze/configs/DCP_add.py',
+                        default='/home/dong/GitHub_Frame/UW/config/UIEC2Net.py',
                         help='train config file path')
     parser.add_argument('--load_from',
-                        default='/home/dong/python-project/Dehaze/checkpoints/wyd/New/dehaze_backbone_1/epoch_101.pth',
+                        default='/home/dong/GitHub_Frame/UW/checkpoints/UIEC2Net.pth',
                         help='the dir to save logs and models,')
     parser.add_argument('--savepath', help='the dir to save logs and models,')
     group_gpus = parser.add_mutually_exclusive_group()
@@ -99,11 +99,13 @@ if __name__ == '__main__':
     # create text log
     # build model
     model = build_network(cfg.model, train_cfg=cfg.train_cfg, test_cfg=cfg.test_cfg)
+    load(cfg.load_from, model, None)
     # build dataset
     datasets = build_dataset(cfg.data.test)
     # put model on gpu
     if torch.cuda.is_available():
-        model = DataParallel(model.cuda(), device_ids=cfg.gpu_ids)
+        # model = DataParallel(model.cuda(), device_ids=cfg.gpu_ids)
+        model = model.cuda()
     # create data_loader
     data_loader = build_dataloader(
         datasets,
@@ -111,7 +113,10 @@ if __name__ == '__main__':
         cfg.data.val_workers_per_gpu,
         len(cfg.gpu_ids))
 
-    load(cfg.load_from, model, None)
+    save_cfg = False
+    for i in range(len(cfg.test_pipeling)):
+        if 'Normalize' == cfg.test_pipeling[i].type:
+            save_cfg = True
 
     save_path = osp.join(cfg.savepath, cfg.load_from.split('/')[-1].split('.')[0])
     mkdir_or_exist(save_path)
@@ -125,8 +130,8 @@ if __name__ == '__main__':
         with torch.no_grad():
             out_rgb = model(inputs)
         print('writing' + data['image_id'][0] + '.png')
-        input_numpy = normimage(inputs)
-        rgb_numpy = normimage(out_rgb)
+        input_numpy = normimage(inputs, save_cfg=save_cfg)
+        rgb_numpy = normimage(out_rgb, save_cfg=save_cfg)
 
         outsavepath = osp.join(save_path, data['image_id'][0] + '.png')
         inputsavepath = osp.join(save_path, data['image_id'][0] + '_input.png')

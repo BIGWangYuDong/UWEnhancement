@@ -17,9 +17,7 @@ class BaseNet(nn.Module):
         # print()
 
     def _init_layers(self):
-        self.x1 = nn.Conv2d(3,16,3,1,1)
-        self.x2 = nn.Conv2d(3,16,3,1,1)
-        self.bn1 = nn.BatchNorm2d(64)
+        pass
 
     def init_weight(self, pretrained=None):
         if self.backbone and pretrained is not None:
