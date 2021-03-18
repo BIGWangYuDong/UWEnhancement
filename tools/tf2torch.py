@@ -106,6 +106,7 @@ def save_epoch(model):
     save_path = 'UWCNN_type9.pth'
     torch.save(checkpoint, save_path)
 
+
 if __name__ == '__main__':
     checkpoint_dir = FLAGS.checkpoint_dir
     label_name = FLAGS.label_name
