@@ -11,12 +11,15 @@ def normPRED(d):
     dn = (d-mi)/(ma-mi)
     return dn
 
-def normimage(input_image, imtype=np.uint8):
+def normimage(input_image, save_cfg=True, imtype=np.uint8):
     if isinstance(input_image, torch.Tensor):  # get the data from a variable
         image_tensor = input_image.data
         image_numpy = image_tensor[0].cpu().float().numpy()
         if image_numpy.shape[0] == 3:
-            image_numpy = (np.transpose(image_numpy, (1, 2, 0)) + 1) / 2.0 * 255.0
+            if save_cfg:
+                image_numpy = (np.transpose(image_numpy, (1, 2, 0)) + 1) / 2.0 * 255.0
+            else:
+                image_numpy = (np.transpose(image_numpy, (1, 2, 0))) * 255.0
         if image_numpy.shape[0] == 1:  # grayscale to RGB
             image_numpy = np.tile(image_numpy, (3, 1, 1))
             image_numpy = (np.transpose(image_numpy, (1, 2, 0)) + 1) / 2.0 * 255.0
@@ -36,6 +39,7 @@ def save_ensemble_image(image_numpy, image_flip_numpy, image_path):
     out = out.astype(np.uint8)
     out = Image.fromarray(out)
     out.save(image_path)
+
 
 def save_ensemble_image_8(rgb_numpy,
                           image_flip_lr_numpy,
@@ -81,25 +85,27 @@ def save_ensemble_image_8(rgb_numpy,
 
 
 
-def save_image(image_numpy, image_path, aspect_ratio=1.0):
+def save_image(image_numpy, image_path, usebytescale=False, aspect_ratio=1.0):
     """Save a numpy image to the disk
 
     Parameters:
         image_numpy (numpy array) -- input numpy array
         image_path (str)          -- the path of the image
     """
+    if not usebytescale:
+        image_pil = Image.fromarray(image_numpy)
+        h, w, _ = image_numpy.shape
 
-    image_pil = Image.fromarray(image_numpy)
-    h, w, _ = image_numpy.shape
-
-    if aspect_ratio > 1.0:
-        image_pil = image_pil.resize((h, int(w * aspect_ratio)), Image.BICUBIC)
-    if aspect_ratio < 1.0:
-        image_pil = image_pil.resize((int(h / aspect_ratio), w), Image.BICUBIC)
+        if aspect_ratio > 1.0:
+            image_pil = image_pil.resize((h, int(w * aspect_ratio)), Image.BICUBIC)
+        if aspect_ratio < 1.0:
+            image_pil = image_pil.resize((int(h / aspect_ratio), w), Image.BICUBIC)
+    else:
+        image_pil = image_numpy
     image_pil.save(image_path)
 
 
-def normimage(input_image, save_cfg=True, imtype=np.uint8):
+def normimage_test(input_image, save_cfg=True, usebytescale=False, imtype=np.uint8):
     if isinstance(input_image, torch.Tensor):  # get the data from a variable
         image_tensor = input_image.data
         image_numpy = image_tensor[0].cpu().float().numpy()
@@ -113,4 +119,46 @@ def normimage(input_image, save_cfg=True, imtype=np.uint8):
             image_numpy = (np.transpose(image_numpy, (1, 2, 0)) + 1) / 2.0 * 255.0
     else:  # if it is a numpy array, do nothing
         image_numpy = input_image
-    return image_numpy.astype(imtype)
+    if usebytescale:
+        shape = list(image_numpy.shape)
+        if shape[-1] == 3:
+            mode = 'RGB'
+        else:
+            mode = 'RGBA'
+        bytedata = bytescale(image_numpy)
+        strdata = bytedata.tostring()
+        shape = list(bytedata.shape)
+        shape = (shape[1], shape[0])
+        return Image.frombytes(mode, shape, strdata)
+    else:
+        return image_numpy.astype(imtype)
+
+
+def bytescale(data, cmin=None, cmax=None, high=255, low=0):
+    '''
+    copy from scipy1.1.0
+    '''
+    if data.dtype == np.uint8:
+        return data
+
+    if high > 255:
+        raise ValueError("`high` should be less than or equal to 255.")
+    if low < 0:
+        raise ValueError("`low` should be greater than or equal to 0.")
+    if high < low:
+        raise ValueError("`high` should be greater than or equal to `low`.")
+
+    if cmin is None:
+        cmin = data.min()
+    if cmax is None:
+        cmax = data.max()
+
+    cscale = cmax - cmin
+    if cscale < 0:
+        raise ValueError("`cmax` should be larger than `cmin`.")
+    elif cscale == 0:
+        cscale = 1
+
+    scale = float(high - low) / cscale
+    bytedata = (data - cmin) * scale + low
+    return (bytedata.clip(low, high) + 0.5).astype(np.uint8)

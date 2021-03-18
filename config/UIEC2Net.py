@@ -14,7 +14,7 @@ test_ann_file_path = 'test.txt'         # txt file for loading images, default =
 
 
 img_norm_cfg = dict(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))
-train_pipeline = [dict(type='LoadImageFromFile', gt_type='color', get_gt=False),
+train_pipeline = [dict(type='LoadImageFromFile', gt_type='color', get_gt=True),
                   dict(type='RandomFlip', flip_ratio=0.5),
                   # dict(type='Pad', size_divisor=32, mode='resize'),
                   dict(type='ImageToTensor')]
@@ -22,6 +22,8 @@ test_pipeling = [dict(type='LoadImageFromFile', gt_type='color', get_gt=False),
                  # dict(type='Resize', img_scale=(256,256), keep_ratio=True),
                  # dict(type='Pad', size_divisor=32, mode='resize'),
                  dict(type='ImageToTensor')]
+
+usebytescale = False                                    # if use output min->0, max->255, default is False (copy from scipy=1.1.0)
 
 data = dict(
     samples_per_gpu=8,                                  # batch size, default = 4

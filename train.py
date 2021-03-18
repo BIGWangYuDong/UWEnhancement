@@ -47,7 +47,7 @@ def get_host_info():
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a detector')
-    parser.add_argument('--config',type=str, default='/home/dong/python-project/Dehaze/configs/DCP_New.py',
+    parser.add_argument('--config',type=str, default='/home/dong/GitHub_Frame/UW/config/UWCNN.py',
                         help='train config file path')
     parser.add_argument('--work_dir', help='the dir to save logs and models,')
     group_gpus = parser.add_mutually_exclusive_group()
@@ -133,9 +133,9 @@ if __name__ == '__main__':
     visualizer = Visualizer()
     vis = visdom.Visdom()
     criterion_ssim_loss = build_loss(cfg.loss_ssim)
-    criterion_l1_loss = build_loss(cfg.loss_l1)
-    criterion_perc_loss = build_loss(cfg.loss_perc)
-    criterion_tv_loss = build_loss(cfg.loss_tv)
+    # criterion_l1_loss = build_loss(cfg.loss_l1)
+    # criterion_perc_loss = build_loss(cfg.loss_perc)
+    # criterion_tv_loss = build_loss(cfg.loss_tv)
 
     ite_num = 0
     start_epoch = 1     # start range at 1-1 = 0
@@ -143,6 +143,11 @@ if __name__ == '__main__':
     running_tar_loss = 0.0
     ite_num4val = 0
     max_iters = cfg.total_epoch * len(data_loader)
+
+    save_cfg = False
+    for i in range(len(cfg.test_pipeling)):
+        if 'Normalize' == cfg.test_pipeling[i].type:
+            save_cfg = True
 
     model.train()
     print("---start training...")
@@ -170,12 +175,14 @@ if __name__ == '__main__':
             # loss_up_2 = criterion_l1_loss(up_2_out, gt)
             # loss_up_3 = criterion_l1_loss(up_3_out, gt)
             # loss_fft = (loss_up_1 + loss_up_2 + loss_up_3) / 6
-            loss_l1 = criterion_l1_loss(out_rgb, gt)
+            # loss_l1 = criterion_l1_loss(out_rgb, gt)
             loss_ssim = criterion_ssim_loss(out_rgb, gt)
             # loss_perc = criterion_perc_loss(out_rgb, gt, cfg)
-            loss_perc = criterion_tv_loss(out_rgb, gt)
-            loss_tv = criterion_tv_loss(out_rgb, gt)
-            loss = loss_l1 + loss_ssim +loss_tv
+            # loss_perc = criterion_tv_loss(out_rgb, gt)
+            # loss_tv = criterion_tv_loss(out_rgb, gt)
+            # loss = loss_l1 + loss_ssim +loss_tv
+            loss_l1 = loss_perc = loss_tv = loss_ssim
+            loss = loss_ssim
             loss.backward()
             optimizer.step()
 
@@ -236,9 +243,9 @@ if __name__ == '__main__':
                 # outputs_show1 = torch.cat([pred_1, pred_2, pred_3], dim=1)
                 # outputs_show1 = Variable(outputs_show1[0], requires_grad=False).cpu().float().numpy() * 255
 
-                inputshow = normimage(inputs)
-                gtshow = normimage(gt)
-                outshow = normimage(out_rgb)
+                inputshow = normimage(inputs, save_cfg=save_cfg)
+                gtshow = normimage(gt, save_cfg=save_cfg)
+                outshow = normimage(out_rgb, save_cfg=save_cfg)
 
                 shows = []
                 # shows.append(inputs_show)

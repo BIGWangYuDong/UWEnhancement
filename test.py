@@ -14,7 +14,7 @@ from UW.core.Models import build_network
 from UW.core.Datasets import build_dataset, build_dataloader
 from UW.core.Optimizer import build_optimizer, build_scheduler
 from UW.utils import (mkdir_or_exist, get_root_logger,
-                      save_epoch, save_latest, save_item,
+                      save_epoch, save_latest, save_item, normimage_test,
                       resume, load, normPRED)
 
 from UW.utils.save_image import (save_image, normimage,
@@ -47,10 +47,10 @@ def get_host_info():
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a detector')
     parser.add_argument('--config',type=str,
-                        default='/home/dong/GitHub_Frame/UW/config/UIEC2Net.py',
+                        default='/home/dong/GitHub_Frame/UW/config/UWCNN.py',
                         help='train config file path')
     parser.add_argument('--load_from',
-                        default='/home/dong/GitHub_Frame/UW/checkpoints/UIEC2Net.pth',
+                        default='/home/dong/GitHub_Frame/UW/checkpoints/UWCNN/UWCNN_type3.pth',
                         help='the dir to save logs and models,')
     parser.add_argument('--savepath', help='the dir to save logs and models,')
     group_gpus = parser.add_mutually_exclusive_group()
@@ -130,13 +130,13 @@ if __name__ == '__main__':
         with torch.no_grad():
             out_rgb = model(inputs)
         print('writing' + data['image_id'][0] + '.png')
-        input_numpy = normimage(inputs, save_cfg=save_cfg)
-        rgb_numpy = normimage(out_rgb, save_cfg=save_cfg)
+        # input_numpy = normimage_test(inputs, save_cfg=save_cfg)
+        rgb_numpy = normimage_test(out_rgb, save_cfg=save_cfg, usebytescale=cfg.usebytescale)
 
         outsavepath = osp.join(save_path, data['image_id'][0] + '.png')
         inputsavepath = osp.join(save_path, data['image_id'][0] + '_input.png')
 
-        save_image(input_numpy, inputsavepath)
-        save_image(rgb_numpy, outsavepath)
+        # save_image(input_numpy, inputsavepath)
+        save_image(rgb_numpy, outsavepath, usebytescale=cfg.usebytescale)
 
 
