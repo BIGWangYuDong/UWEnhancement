@@ -36,5 +36,5 @@ class BaseNet(nn.Module):
         else:
             self.net_parameters = None
 
-    def forward(self, x):
+    def forward(self, *args):
         pass

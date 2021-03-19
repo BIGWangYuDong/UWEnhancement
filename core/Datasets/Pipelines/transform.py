@@ -33,6 +33,14 @@ class Resize(object):
         if 'gt' in results:
             gt = results['gt']
             results['gt'] = transform(gt)
+        if 'ce_image' and 'gc_image' and 'wb_image' in results:
+            ce_image = results['ce_image']
+            gc_image = results['gc_image']
+            wb_image = results['wb_image']
+            results['ce_image'] = transform(ce_image)
+            results['gc_image'] = transform(gc_image)
+            results['wb_image'] = transform(wb_image)
+
         return results
 
 
@@ -64,7 +72,13 @@ class RandomCrop(object):
         if 'gt' in results:
             gt = results['gt']
             results['gt'] = F.crop(gt, i, j, th, tw)
-
+        if 'ce_image' and 'gc_image' and 'wb_image' in results:
+            ce_image = results['ce_image']
+            gc_image = results['gc_image']
+            wb_image = results['wb_image']
+            results['ce_image'] = F.crop(ce_image, i, j, th, tw)
+            results['gc_image'] = F.crop(gc_image, i, j, th, tw)
+            results['wb_image'] = F.crop(wb_image, i, j, th, tw)
 
         return results
 
@@ -88,6 +102,13 @@ class RandomFlip(object):
         if 'gt' in results:
             gt = results['gt']
             results['gt'] = flip_transform(gt)
+        if 'ce_image' and 'gc_image' and 'wb_image' in results:
+            ce_image = results['ce_image']
+            gc_image = results['gc_image']
+            wb_image = results['wb_image']
+            results['ce_image'] = flip_transform(ce_image)
+            results['gc_image'] = flip_transform(gc_image)
+            results['wb_image'] = flip_transform(wb_image)
 
         return results
 
@@ -138,6 +159,13 @@ class Pad(object):
         if 'gt' in results:
             gt = results['gt']
             results['gt'] = transform(gt)
+        if 'ce_image' and 'gc_image' and 'wb_image' in results:
+            ce_image = results['ce_image']
+            gc_image = results['gc_image']
+            wb_image = results['wb_image']
+            results['ce_image'] = transform(ce_image)
+            results['gc_image'] = transform(gc_image)
+            results['wb_image'] = transform(wb_image)
         return results
 
 # 再建一个 resize到可整除的
@@ -158,6 +186,18 @@ class ImageToTensor(object):
                 results['gt'] = totensor(gt).cuda()
             else:
                 results['gt'] = totensor(gt)
+        if 'ce_image' and 'gc_image' and 'wb_image' in results:
+            ce_image = results['ce_image']
+            gc_image = results['gc_image']
+            wb_image = results['wb_image']
+            if torch.cuda.is_available():
+                results['ce_image'] = totensor(ce_image).cuda()
+                results['gc_image'] = totensor(gc_image).cuda()
+                results['wb_image'] = totensor(wb_image).cuda()
+            else:
+                results['ce_image'] = totensor(ce_image)
+                results['gc_image'] = totensor(gc_image)
+                results['wb_image'] = totensor(wb_image)
         results['image_id'] = results['image_path'].split('/')[-1].split('.')[0]
         return results
 
@@ -176,6 +216,13 @@ class Normalize(object):
         if 'gt' in results:
             gt = results['gt']
             results['gt'] = Normalize(gt)
+        if 'ce_image' and 'gc_image' and 'wb_image' in results:
+            ce_image = results['ce_image']
+            gc_image = results['gc_image']
+            wb_image = results['wb_image']
+            results['ce_image'] = Normalize(ce_image)
+            results['gc_image'] = Normalize(gc_image)
+            results['wb_image'] = Normalize(wb_image)
         return results
 
 
@@ -218,6 +265,14 @@ class RandomRotate90(object):
             gt = results['gt']
             if rotate_prob < self.ratio:
                 results['gt'] = gt.transpose(Image.ROTATE_90)
+        if 'ce_image' and 'gc_image' and 'wb_image' in results:
+            ce_image = results['ce_image']
+            gc_image = results['gc_image']
+            wb_image = results['wb_image']
+            if rotate_prob < self.ratio:
+                results['ce_image'] = ce_image.transpose(Image.ROTATE_90)
+                results['gc_image'] = gc_image.transpose(Image.ROTATE_90)
+                results['wb_image'] = wb_image.transpose(Image.ROTATE_90)
         return results
 
 
@@ -240,4 +295,12 @@ class RandomRotate180(object):
             gt = results['gt']
             if rotate_prob < self.ratio:
                 results['gt'] = gt.transpose(Image.ROTATE_180)
+        if 'ce_image' and 'gc_image' and 'wb_image' in results:
+            ce_image = results['ce_image']
+            gc_image = results['gc_image']
+            wb_image = results['wb_image']
+            if rotate_prob < self.ratio:
+                results['ce_image'] = ce_image.transpose(Image.ROTATE_180)
+                results['gc_image'] = gc_image.transpose(Image.ROTATE_180)
+                results['wb_image'] = wb_image.transpose(Image.ROTATE_180)
         return results
