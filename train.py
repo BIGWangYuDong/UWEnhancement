@@ -22,22 +22,8 @@ from UW.core.Losses import build_loss
 from UW.utils.Visualizer import Visualizer
 from UW.utils.save_image import normimage, normPRED
 
-
+from tensorboardX import SummaryWriter
 TORCH_VERSION = torch.__version__
-if TORCH_VERSION < '1.1' or TORCH_VERSION == 'parrots':
-    try:
-        from tensorboardX import SummaryWriter
-    except ImportError:
-        raise ImportError('Please install tensorboardX to use '
-                          'TensorboardLoggerHook.')
-else:
-    try:
-        from torch.utils.tensorboard import SummaryWriter
-    except ImportError:
-        raise ImportError(
-            'Please run "pip install future tensorboard" to install '
-            'the dependencies to use torch.utils.tensorboard '
-            '(applicable to PyTorch 1.1 or higher)')
 
 from getpass import getuser
 from socket import gethostname

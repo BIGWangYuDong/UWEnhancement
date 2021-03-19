@@ -28,22 +28,7 @@ from apex import amp
 from apex.parallel import convert_syncbn_model
 from apex.parallel import DistributedDataParallel as DDP
 
-
-TORCH_VERSION = torch.__version__
-if TORCH_VERSION < '1.1' or TORCH_VERSION == 'parrots':
-    try:
-        from tensorboardX import SummaryWriter
-    except ImportError:
-        raise ImportError('Please install tensorboardX to use '
-                          'TensorboardLoggerHook.')
-else:
-    try:
-        from torch.utils.tensorboard import SummaryWriter
-    except ImportError:
-        raise ImportError(
-            'Please run "pip install future tensorboard" to install '
-            'the dependencies to use torch.utils.tensorboard '
-            '(applicable to PyTorch 1.1 or higher)')
+from tensorboardX import SummaryWriter
 
 from getpass import getuser
 from socket import gethostname
@@ -53,7 +38,7 @@ def get_host_info():
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a detector')
-    parser.add_argument('--config',type=str, default='/home/dong/python-project/Dehaze/configs/DCP_New.py',
+    parser.add_argument('--config',type=str, default='/home/dong/GitHub_Frame/UW/config/UWCNN.py',
                         help='train config file path')
     parser.add_argument('--work_dir', help='the dir to save logs and models,')
     group_gpus = parser.add_mutually_exclusive_group()
@@ -144,8 +129,6 @@ if __name__ == '__main__':
     vis = visdom.Visdom()
     criterion_ssim_loss = build_loss(cfg.loss_ssim)
     criterion_l1_loss = build_loss(cfg.loss_l1)
-    criterion_perc_loss = build_loss(cfg.loss_perc)
-    criterion_tv_loss = build_loss(cfg.loss_tv)
 
     ite_num = 0
     start_epoch = 1     # start range at 1-1 = 0
@@ -182,10 +165,7 @@ if __name__ == '__main__':
             # loss_fft = (loss_up_1 + loss_up_2 + loss_up_3) / 6
             loss_l1 = criterion_l1_loss(out_rgb, gt)
             loss_ssim = criterion_ssim_loss(out_rgb, gt)
-            # loss_perc = criterion_perc_loss(out_rgb, gt, cfg)
-            loss_perc = criterion_tv_loss(out_rgb, gt) * 0
-            loss_tv = criterion_tv_loss(out_rgb, gt)
-            loss = loss_l1 + loss_ssim + loss_tv
+            loss = loss_l1 + loss_ssim
             with amp.scale_loss(loss, optimizer) as scaled_loss:
                 scaled_loss.backward()
             # loss.backward()
@@ -193,17 +173,13 @@ if __name__ == '__main__':
 
             write.add_scalar('loss_l1', loss_l1, ite_num)
             write.add_scalar('loss_ssim', loss_ssim, ite_num)
-            write.add_scalar('loss_perc', loss_perc, ite_num)
-            write.add_scalar('loss_tv', loss_tv, ite_num)
 
-            logger.info('Epoch: [%d][%d/%d]  lr: %f  time: %.3f loss_l1: %f  loss_ssim: %f  loss_perc: %f   loss_tv: %f   loss: %f',
+            logger.info('Epoch: [%d][%d/%d]  lr: %f  time: %.3f loss_l1: %f  loss_ssim: %f    loss: %f',
                         epoch+1, ite_num, max_iters, optimizer.param_groups[0]['lr'],
-                        data_time, loss_l1, loss_ssim, loss_perc, loss_tv, loss)
+                        data_time, loss_l1, loss_ssim, loss)
             losses = collections.OrderedDict()
             losses['loss_l1'] = loss_l1.data.cpu()
             losses['loss_ssim'] = loss_ssim.data.cpu()
-            losses['loss_tv'] = loss_tv.data.cpu()
-            losses['loss_perc'] = loss_perc.data.cpu()
             losses['total_loss'] = loss.data.cpu()
             visualizer.plot_current_losses(epoch + 1,
                                            float(i) / len(data_loader),
