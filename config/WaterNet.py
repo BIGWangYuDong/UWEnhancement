@@ -24,7 +24,7 @@ test_pipeling = [dict(type='LoadImageFromFile', gt_type='color', get_gt=False),
                  dict(type='LoadWaterNetImage', path='WaterNet/'),
                  dict(type='ImageToTensor')]
 
-usebytescale = True                                     # if use output min->0, max->255, default is True (copy from scipy=1.1.0)
+usebytescale = False                                     # if use output min->0, max->255, default is False (copy from scipy=1.1.0)
 
 data = dict(
     samples_per_gpu=8,                                  # batch size, default = 4
