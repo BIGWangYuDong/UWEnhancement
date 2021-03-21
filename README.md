@@ -8,7 +8,7 @@ This is an open source underwater image enhancement toolbox based on PyTorch. Me
 
 ## Introduction
 
-This is a code that summarizes deep learning-based underwater image enhancement. We converted relevant **<font color=#dd0000 >Tensorflow</font>** code to  **<font color=#dd0000 >PyTorch</font>**, and transcoded the Tensorflow checkpoint provided by the author so that it can be read by PyTorch. We confirmed the reliability of transcoding, and uploaded the PyTorch checkpoint models(.pth file) to **<font color=#00C >Google Drive</font>** and **<font color=#00C >Baidu Cloud</font>**. (You can download in [Model Zoo](./docs/Model_Zoo.md))
+This is a code that summarizes deep learning-based underwater image enhancement. We converted relevant **<font color=#dd0000 >Tensorflow</font>** code to  **<font color=#dd0000 >PyTorch</font>**, and transcoded the Tensorflow checkpoint provided by the author so that it can be read by PyTorch. We confirmed the reliability of transcoding, and uploaded the PyTorch checkpoint models(.pth file) to **<font color=#00C >Google Drive</font>** and **<font color=#00C >Baidu Cloud</font>**. (You can download at [Model Zoo](./docs/Model_Zoo.md))
 
 This is convenient for everyone to use the same environment to run experiments. We currently support [UIEC^2-Net](https://github.com/BIGWangYuDong/UWEnhancement), [UWCNN](https://github.com/saeed-anwar/UWCNN), [WaterNet](https://github.com/Li-Chongyi/Water-Net_Code), and we will continue to update. (More details in [Model Zoo](./docs/Model_Zoo.md))
 
