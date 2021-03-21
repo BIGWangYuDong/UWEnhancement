@@ -15,7 +15,7 @@ The method of using the file is as follows:
 ```
 cd tools/
 python visualize_network.py
-tensorboard --logdir runs/XXX (folder name)
+tensorboard --logdir runs/XXX 			# XXX means folder name
 ```
 Usually you can see the network structure at http://localhost:6006/#
 
@@ -36,7 +36,7 @@ shows.append(XXX.transpose([2, 0, 1]))
 Every training process we save a new log file and you can see the option and training details from this log file. Also, you can use tensorboard to visualize the loss curve:
 ```
 cd XXXX							# workdir root
-tensorboard --logdir tf_logs/XXX(file name)
+tensorboard --logdir tf_logs/XXX			# XXX means file name
 ```
 ## Test Time Argument x8 
 

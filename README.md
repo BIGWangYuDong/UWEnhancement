@@ -86,13 +86,11 @@ If you have any questions, please contact us (yudongwang@tju.edu.cn or yudongwan
 Bibliography entry for citation:
 
 ```
-@misc{wang2021uiec2net,
-      title={UIEC^2-Net: CNN-based Underwater Image Enhancement Using Two Color Space}, 
-      author={Yudong Wang and Jichang Guo and Huan Gao and Huihui Yue},
-      year={2021},
-      eprint={2103.07138},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+@article{wang2021uiec,
+  title={UIEC\^{} 2-Net: CNN-based Underwater Image Enhancement Using Two Color Space},
+  author={Wang, Yudong and Guo, Jichang and Gao, Huan and Yue, Huihui},
+  journal={arXiv preprint arXiv:2103.07138},
+  year={2021}
 }
 ```
 
