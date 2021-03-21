@@ -193,41 +193,6 @@ if __name__ == '__main__':
             time_ = time.time() - t
             t = time.time()
             if ite_num4val % 5 == 0:
-                # pred_1 = inputs[0:1, 0:1, :, :]
-                # pred_1 = normPRED(pred_1)
-                # pred_2 = inputs[0:1, 1:2, :, :]
-                # pred_2 = normPRED(pred_2)
-                # pred_3 = inputs[0:1, 2:3, :, :]
-                # pred_3 = normPRED(pred_3)
-                # inputs_show = torch.cat([pred_1, pred_2, pred_3], dim=1)
-                # inputs_show = inputs_show[0].cpu().float().numpy() * 255
-                #
-                # gt_1 = gt[0:1, 0:1, :, :]
-                # gt_1 = normPRED(gt_1)
-                # gt_2 = gt[0:1, 1:2, :, :]
-                # gt_2 = normPRED(gt_2)
-                # gt_3 = gt[0:1, 2:3, :, :]
-                # gt_3 = normPRED(gt_3)
-                # gt_show = torch.cat([gt_1, gt_2, gt_3], dim=1)
-                # gt_show = gt_show[0].cpu().float().numpy() * 255
-                #
-                # pred_1 = out_rgb[0:1, 0:1, :, :]
-                # # pred_1 = normPRED(pred_1)
-                # pred_2 = out_rgb[0:1, 1:2, :, :]
-                # # pred_2 = normPRED(pred_2)
-                # pred_3 = out_rgb[0:1, 2:3, :, :]
-                # # pred_3 = normPRED(pred_3)
-                # outputs_show = torch.cat([pred_1, pred_2, pred_3], dim=1)
-                # outputs_show = Variable(outputs_show[0], requires_grad=False).cpu().float().numpy() * 255
-                #
-                # pred_1 = out_rgb[0:1, 0:1, :, :]
-                # pred_1 = normPRED(pred_1)
-                # pred_2 = out_rgb[0:1, 1:2, :, :]
-                # pred_2 = normPRED(pred_2)
-                # pred_3 = out_rgb[0:1, 2:3, :, :]
-                # pred_3 = normPRED(pred_3)
-                # outputs_show1 = torch.cat([pred_1, pred_2, pred_3], dim=1)
-                # outputs_show1 = Variable(outputs_show1[0], requires_grad=False).cpu().float().numpy() * 255
 
                 inputshow = normimage(inputs, save_cfg=save_cfg)
                 gtshow = normimage(gt, save_cfg=save_cfg)

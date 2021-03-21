@@ -38,16 +38,18 @@ class Net(BaseNet):
         init layers
         e.g. self.conv1 = nn.Conv2d(3,16,3,1,1)
         '''
-        pass
+        self.conv1 = nn.Conv2d(3,16,3,1,1)
 
     def init_weight(self, pretrained=None):
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 xavier_init(m)
-        self.backbone.init_weights(pretrained)
+        if self.backbone is not None:
+            self.backbone.init_weights(pretrained)
 
     def forward(self, x):
-        pass
+        out = self.conv1(x)
+        return out
 
 if __name__ == '__main__':
     writer = SummaryWriter('log')
