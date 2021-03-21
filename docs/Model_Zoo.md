@@ -28,16 +28,14 @@ Paper:  ["Underwater Scene Prior Inspired Deep Underwater Image and Video Enhanc
 Source Code : https://github.com/saeed-anwar/UWCNN
 
 ```latex
-@article{Anwar2019UWCNN,
-  title = "Underwater scene prior inspired deep underwater image and video enhancement",
-  journal = "Pattern Recognition",
-  volume = "98",
-  pages = "107038",
-  year = "2020",
-  issn = "0031-3203",
-  doi = "https://doi.org/10.1016/j.patcog.2019.107038",
-  url = "http://www.sciencedirect.com/science/article/pii/S0031320319303401",
-  author = "Chongyi Li and Saeed Anwar and Fatih Porikli",
+@article{li2020underwater,
+  title={Underwater scene prior inspired deep underwater image and video enhancement},
+  author={Li, Chongyi and Anwar, Saeed and Porikli, Fatih},
+  journal={Pattern Recognition},
+  volume={98},
+  pages={107038},
+  year={2020},
+  publisher={Elsevier}
 }
 ```
 
