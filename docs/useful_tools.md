@@ -18,7 +18,6 @@ python visualize_network.py
 tensorboard --logdir runs/XXX (folder name)
 ```
 Usually you can see the network structure at http://localhost:6006/#
-加一张图片
 
 ## Train Process Monitoring and Training Details Review
 
@@ -38,9 +37,7 @@ Every training process we save a new log file and you can see the option and tra
 ```
 cd XXXX							# workdir root
 tensorboard --logdir tf_logs/XXX(file name)
-``` 
-加一张图片
-
+```
 ## Test Time Argument x8 
 
 You can ues [test_TTAx8.py](../test_TTAx8.py) to use Test Time Argument(TTA)x8. Testing way is same as test.py
@@ -65,10 +62,7 @@ The method of using the file is as follows:
 4. run 
 ```
 python output_featuremap.py
-
 ```
-加一张图片
-
 ## Get WaterNet Data
 
 Copy from Water-Net-Code, it's a MATLAB code, you can use [generate_test_data.m](../tools/get_waternet_data/generate_test_data.m) to obtain Histogram Equalization(HE), Gamma Correction(GC) and White Balance(WB) processed image.
