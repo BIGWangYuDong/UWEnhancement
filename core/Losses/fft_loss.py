@@ -4,7 +4,7 @@ from UW.core.Losses.builder import LOSSES
 
 
 @LOSSES.register_module()
-class FFTLoss(torch.nn.Module):
+class FFTLoss(nn.Module):
     def __init__(self, loss_weight=1.0):
         super(FFTLoss, self).__init__()
         self.loss_weight = loss_weight
