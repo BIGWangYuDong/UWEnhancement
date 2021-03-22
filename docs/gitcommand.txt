@@ -65,7 +65,8 @@ git branch -d XXX
 
 git pull origin XXX(网上) XXX(本地) # 将网上的分支pull到本地
 
-
+git tag -a 版本 -m '说明'
+git push --tags
 
 
 
