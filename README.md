@@ -40,12 +40,12 @@ Using [write_txt.py](./tools/write_txt.py) prepare train.txt and test.txt. All d
 
     .
     ├── ...
-    ├── DATA                    
+    ├── DATA
     │   ├── Train
     │   │   ├── train
     │   │   ├── gt
     │   │   └── train.txt
-    │   ├── Test  
+    │   ├── Test
     │   │   ├── test
     │   │   ├── gt(if need)
     │   │   └── test.txt
@@ -53,7 +53,7 @@ Using [write_txt.py](./tools/write_txt.py) prepare train.txt and test.txt. All d
 If you want to run WaterNet, you should [prepare GC, WB, HE images](./tools\get_waternet_data) and put in ```DATA/Train/WaterNet``` and ```DATA/Train/WaterNet```, the directory structure is:
 
     .
-    ├── WaterNet                    
+    ├── WaterNet
     │    ├── ce
     │    ├── gc
     │    └── wb
@@ -75,14 +75,14 @@ If you want to use our toolbox to add some New Models, Data Pipelines, loss func
 ```
 python test.py
 # or 
-python test_UWModels/test_XXX.py 		
+python test_UWModels/test_XXX.py
 ```
 
 ## Training
 
 ```
 python -m visdom.server			# open this in a single terminal
-python train.py --gpus XX 		# XX means use numbers of gpus   
+python train.py --gpus XX 		# XX means use numbers of gpus
 ```
 
 

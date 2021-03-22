@@ -243,16 +243,16 @@ from .a_dataset import ADataset
 ```python
 dataset_type = 'ADataset'
 data = dict(
-    ...                        
-    train=dict(                                     
+    ...
+    train=dict(
         type=dataset_type,
         arg1=xxx,
         ...),
-    val=dict(                                     
+    val=dict(
         type=dataset_type,
         arg1=xxx,
         ...),
-    test=dict(                                     
+    test=dict(
         type=dataset_type,
         arg1=xxx,
         ...),
