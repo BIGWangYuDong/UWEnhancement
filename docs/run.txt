@@ -1,3 +1,3 @@
-python -m visdom.server
+python -m visdom.server		# open a single terminal
 
-python train.py --gpus 2
+python train.py --gpus 2		# open another terminal
