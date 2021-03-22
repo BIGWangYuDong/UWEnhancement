@@ -36,7 +36,7 @@ Please refer [getting_start.md](./docs/getting_start.md) for installation.
 
 ## Prepare Data
 
-All datasets should put in DATA folders, the directory structure is:
+Using [write_txt.py](./tools/write_txt.py) prepare train.txt and test.txt. All datasets should put in DATA folders, the directory structure is:
 
     .
     ├── ...
@@ -50,7 +50,15 @@ All datasets should put in DATA folders, the directory structure is:
     │   │   ├── gt(if need)
     │   │   └── test.txt
     └── ...
-Using [write_txt.py](./tools/write_txt.py) prepare train.txt and test.txt.
+If you want to run WaterNet, you should [prepare GC, WB, HE images](./tools\get_waternet_data) and put in ```DATA/Train/WaterNet``` and ```DATA/Train/WaterNet```, the directory structure is:
+
+    .
+    ├── WaterNet                    
+    │    ├── ce
+    │    ├── gc
+    │    └── wb
+
+
 
 ## Prepare Training and Testing
 
