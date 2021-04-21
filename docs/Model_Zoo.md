@@ -9,11 +9,16 @@ Paper: UIEC^ 2-Net: CNN-based Underwater Image Enhancement Using Two Color Space
 Source Code: https://github.com/BIGWangYuDong/UWEnhancement
 
 ```latex
-@article{wang2021uiec,
-  title={UIEC\^{} 2-Net: CNN-based Underwater Image Enhancement Using Two Color Space},
-  author={Wang, Yudong and Guo, Jichang and Gao, Huan and Yue, Huihui},
-  journal={arXiv preprint arXiv:2103.07138},
-  year={2021}
+@article{WANG2021116250,
+title = {UIEĈ2-Net: CNN-based underwater image enhancement using two color space},
+journal = {Signal Processing: Image Communication},
+pages = {116250},
+year = {2021},
+issn = {0923-5965},
+doi = {https://doi.org/10.1016/j.image.2021.116250},
+url = {https://www.sciencedirect.com/science/article/pii/S0923596521001004},
+author = {Yudong Wang and Jichang Guo and Huan Gao and Huihui Yue},
+keywords = {Underwater image enhancement, HSV color space, Deep learning}
 }
 ```
 
