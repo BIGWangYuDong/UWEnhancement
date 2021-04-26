@@ -50,7 +50,7 @@ Using [write_txt.py](./tools/write_txt.py) prepare train.txt and test.txt. All d
     │   │   ├── gt(if need)
     │   │   └── test.txt
     └── ...
-If you want to run WaterNet, you should [prepare GC, WB, HE images](./tools\get_waternet_data) and put in ```DATA/Train/WaterNet``` and ```DATA/Train/WaterNet```, the directory structure is:
+If you want to run WaterNet, you should [prepare GC, WB, HE images](./tools/get_waternet_data) and put in ```DATA/Train/WaterNet``` and ```DATA/Train/WaterNet```, the directory structure is:
 
     .
     ├── WaterNet
@@ -68,7 +68,7 @@ If you want to run WaterNet, you should [prepare GC, WB, HE images](./tools\get_
 4. change args.config and args.load_from root path.
 5. change config/XXX.py data root path, and some other important options.
 
-If you want to use our toolbox to add some New Models, Data Pipelines, loss functions or some other operation,  **We provide [Tutorials](Tutorials).**
+If you want to use our toolbox to add some New Models, Data Pipelines, loss functions or some other operation,  **We provide [Tutorials](./docs/Tutorials.md).**
 
 ## Testing
 
