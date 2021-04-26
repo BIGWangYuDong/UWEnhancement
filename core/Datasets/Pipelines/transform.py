@@ -12,6 +12,7 @@ import torchvision.transforms.functional as F
 class Resize(object):
     def __init__(self,
                  img_scale=None,
+                 ratio=0,
                  keep_ratio=True
                  ):
         if img_scale is None:
@@ -19,27 +20,47 @@ class Resize(object):
         else:
             assert isinstance(img_scale, (int, tuple))
             self.img_scale = img_scale
+        if ratio > 0 and keep_ratio is True:
+            self.ratio = ratio
+            self.do_ratio = True
         self.keep_ratio = keep_ratio
 
     def __call__(self, results):
         image = results['image']
-        if isinstance(self.img_scale, int):
-            h, w = self.img_scale, self.img_scale
+        if self.do_ratio:
+            w = image.size[0] * self.ratio
+            h = image.size[1] * self.ratio
+            osize = [int(h), int(w)]
+            transform = transforms.Resize(osize)
+            results['image'] = transform(image)
+            if 'gt' in results:
+                gt = results['gt']
+                results['gt'] = transform(gt)
+            if 'ce_image' and 'gc_image' and 'wb_image' in results:
+                ce_image = results['ce_image']
+                gc_image = results['gc_image']
+                wb_image = results['wb_image']
+                results['ce_image'] = transform(ce_image)
+                results['gc_image'] = transform(gc_image)
+                results['wb_image'] = transform(wb_image)
         else:
-            h, w = self.img_scale
-        osize = [h, w]
-        transform = transforms.Resize(osize)
-        results['image'] = transform(image)
-        if 'gt' in results:
-            gt = results['gt']
-            results['gt'] = transform(gt)
-        if 'ce_image' and 'gc_image' and 'wb_image' in results:
-            ce_image = results['ce_image']
-            gc_image = results['gc_image']
-            wb_image = results['wb_image']
-            results['ce_image'] = transform(ce_image)
-            results['gc_image'] = transform(gc_image)
-            results['wb_image'] = transform(wb_image)
+            if isinstance(self.img_scale, int):
+                h, w = self.img_scale, self.img_scale
+            else:
+                h, w = self.img_scale
+            osize = [h, w]
+            transform = transforms.Resize(osize)
+            results['image'] = transform(image)
+            if 'gt' in results:
+                gt = results['gt']
+                results['gt'] = transform(gt)
+            if 'ce_image' and 'gc_image' and 'wb_image' in results:
+                ce_image = results['ce_image']
+                gc_image = results['gc_image']
+                wb_image = results['wb_image']
+                results['ce_image'] = transform(ce_image)
+                results['gc_image'] = transform(gc_image)
+                results['wb_image'] = transform(wb_image)
 
         return results
 
