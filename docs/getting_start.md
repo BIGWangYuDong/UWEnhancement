@@ -16,11 +16,16 @@ Our development environment is:
 
 We recommend using anaconda to create a new environment.
 
+0. Clone the repo
+      ```shell
+   git clone https://github.com/BIGWangYuDong/UWEnhancement.git UW
+      ```
+
 1. Create a conda virtual environment and activate it.
 
      ```shell
    conda create -n UW python=3.6 -y
-   conda activate uw
+   conda activate UW
      ```
 
 2.  Install PyTorch and torchvision following the [official instructions](https://pytorch.org/).

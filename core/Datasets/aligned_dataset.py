@@ -1,6 +1,6 @@
-from UW.core.Datasets.base_dataset import BaseDataset
-from UW.core.Datasets.builder import DATASETS
-from UW.core.Datasets.Pipelines import Compose
+from core.Datasets.base_dataset import BaseDataset
+from core.Datasets.builder import DATASETS
+from core.Datasets.Pipelines import Compose
 import copy
 import numpy as np
 

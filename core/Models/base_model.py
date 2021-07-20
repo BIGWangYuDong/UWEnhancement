@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from UW.core.Models.builder import NETWORK
-from UW.core.Models.weight_init import normal_init
-from UW.utils import get_root_logger, print_log
+from core.Models.builder import NETWORK
+from core.Models.weight_init import normal_init
+from utils import get_root_logger, print_log
 
 class BaseNet(nn.Module):
     def __init__(self,

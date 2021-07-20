@@ -1,6 +1,6 @@
 from collections.abc import Sequence
-from UW.core.Registry import build_from_cfg
-from UW.core.Datasets.builder import PIPELINES
+from core.Registry import build_from_cfg
+from core.Datasets.builder import PIPELINES
 
 
 @PIPELINES.register_module()

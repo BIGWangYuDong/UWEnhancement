@@ -2,7 +2,7 @@ import copy
 import inspect
 import sys
 import torch
-from UW.core.Registry import Registry, build_from_cfg
+from core.Registry import Registry, build_from_cfg
 
 OPTIMIZERS = Registry('optimizer')
 OPTIMIZER_BUILDERS = Registry('optimizer builder')

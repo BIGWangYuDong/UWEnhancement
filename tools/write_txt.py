@@ -2,7 +2,7 @@ import os
 
 
 def getfiles():
-    filenames=os.listdir('/home/dong/python-project/Dehaze/DATA/Train/train')
+    filenames=os.listdir('../DATA/EUVP')
     print(filenames)
     return filenames
 

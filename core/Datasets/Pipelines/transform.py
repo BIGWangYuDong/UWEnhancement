@@ -1,4 +1,4 @@
-from UW.core.Datasets.builder import PIPELINES
+from core.Datasets.builder import PIPELINES
 import torchvision.transforms as transforms
 import numpy as np
 import torch

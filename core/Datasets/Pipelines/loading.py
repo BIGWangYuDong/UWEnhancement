@@ -1,4 +1,4 @@
-from UW.core.Datasets.builder import PIPELINES
+from core.Datasets.builder import PIPELINES
 from PIL import Image
 
 @PIPELINES.register_module()

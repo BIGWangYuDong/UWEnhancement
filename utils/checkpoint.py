@@ -1,5 +1,5 @@
 import torch
-from UW.utils import get_root_logger
+from utils import get_root_logger
 from collections import OrderedDict
 import os
 import os.path as osp

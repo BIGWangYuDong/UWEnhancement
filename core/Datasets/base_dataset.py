@@ -2,8 +2,8 @@ import copy
 from abc import ABCMeta, abstractmethod
 
 from torch.utils.data import Dataset
-from UW.core.Datasets.builder import DATASETS
-from UW.core.Datasets.Pipelines import Compose
+from core.Datasets.builder import DATASETS
+from core.Datasets.Pipelines import Compose
 
 
 

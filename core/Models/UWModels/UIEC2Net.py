@@ -1,10 +1,10 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from UW.core.Models.builder import NETWORK, build_backbone
-from UW.core.Models.base_model import BaseNet
-from UW.core.Models.blocks import HSV2RGB, RGB2HSV
-from UW.core.Models.weight_init import normal_init, xavier_init
+from core.Models.builder import NETWORK, build_backbone
+from core.Models.base_model import BaseNet
+from core.Models.blocks import HSV2RGB, RGB2HSV
+from core.Models.weight_init import normal_init, xavier_init
 
 @NETWORK.register_module()
 class UIEC2Net(BaseNet):

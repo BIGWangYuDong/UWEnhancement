@@ -1,7 +1,7 @@
 import copy
 import torch
 import inspect
-from UW.core.Registry import Registry, build_from_cfg
+from core.Registry import Registry, build_from_cfg
 from torch.optim import lr_scheduler
 
 SCHEDULER = Registry('scheduler')

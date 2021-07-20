@@ -63,10 +63,12 @@ If you want to run WaterNet, you should [prepare GC, WB, HE images](./tools/get_
 ## Prepare Training and Testing
 
 1. Clone the repo.
-2. rename the repo to 'UW'.
-3. put the checkpoint(*.pth) in [checkpoints/](./checkpoints)
-4. change args.config and args.load_from root path.
-5. change config/XXX.py data root path, and some other important options.
+    ```shell
+    git clone https://github.com/BIGWangYuDong/UWEnhancement.git UW
+    ```
+2. put the checkpoint(*.pth) in [checkpoints/](./checkpoints)
+3. change args.config and args.load_from root path.
+4. change config/XXX.py data root path, and some other important options.
 
 If you want to use our toolbox to add some New Models, Data Pipelines, loss functions or some other operation,  **We provide [Tutorials](./docs/Tutorials.md).**
 
