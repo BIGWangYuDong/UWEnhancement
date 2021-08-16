@@ -13,3 +13,5 @@ apex/*
 test_UWModels/results/*
 .idea/*
 tools/runs/*
+
+docs/_build/
