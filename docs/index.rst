@@ -6,19 +6,20 @@ Welcome to Undetwater Enhancement's documentation!
    :caption: Get Started
 
    getting_start.md
-   Model_zoo.md
+   model_zoo.md
 
 .. toctree::
    :maxdepth: 2
    :caption: Tutorials
 
-    Tutorials.md
+    tutorials.md
 
 .. toctree::
    :maxdepth: 2
    :caption: Useful Tools and Scripts
 
     useful_tools.md
+
 
 Indices and tables
 ==================

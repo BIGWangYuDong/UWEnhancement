@@ -32,6 +32,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
     'recommonmark',
+    'sphinx_markdown_tables',
 ]
 
 # The suffix(es) of source filenames.
@@ -41,6 +42,8 @@ source_suffix = {
     '.rst': 'restructuredtext',
     '.md': 'markdown',
 }
+
+master_doc = 'index'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
