@@ -16,7 +16,7 @@ Welcome to Undetwater Enhancement's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Tools
+   :caption: Useful Tools and Scripts
 
     useful_tools.md
 
