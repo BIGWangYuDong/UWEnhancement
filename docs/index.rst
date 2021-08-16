@@ -12,13 +12,13 @@ Welcome to Undetwater Enhancement's documentation!
    :maxdepth: 2
    :caption: Tutorials
 
-    tutorials.md
+   tutorials.md
 
 .. toctree::
    :maxdepth: 2
    :caption: Useful Tools and Scripts
 
-    useful_tools.md
+   useful_tools.md
 
 
 Indices and tables
