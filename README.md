@@ -97,7 +97,7 @@ Bibliography entry for citation:
 
 ```
 @article{wang2021uiec,
-title = {UIEC\^{}2-Net: CNN-based underwater image enhancement using two color space},
+title = {{UIEC\^{}2-Net}: CNN-based underwater image enhancement using two color space},
 journal = {Signal Processing: Image Communication},
 volume = {96},
 pages = {116250},
