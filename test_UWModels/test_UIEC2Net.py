@@ -97,7 +97,8 @@ if __name__ == '__main__':
         datasets,
         cfg.data.val_samples_per_gpu,
         cfg.data.val_workers_per_gpu,
-        len(cfg.gpu_ids))
+        len(cfg.gpu_ids),
+        shuffle=False)
 
     save_cfg = False
     for i in range(len(cfg.test_pipeling)):
@@ -120,7 +121,7 @@ if __name__ == '__main__':
         # input_numpy = normimage_test(inputs, save_cfg=save_cfg)
         rgb_numpy = normimage_test(out_rgb, save_cfg=save_cfg, usebytescale=cfg.usebytescale)
 
-        outsavepath = osp.join(save_path, data['image_id'][0] + '.png')
+        outsavepath = osp.join(save_path, data['image_id'][0] + '.jpg')
         inputsavepath = osp.join(save_path, data['image_id'][0] + '_input.png')
 
         # save_image(input_numpy, inputsavepath)
