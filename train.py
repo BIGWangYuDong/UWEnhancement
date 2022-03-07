@@ -49,6 +49,7 @@ def parse_args():
         help='ids of gpus to use '
              '(only applicable to non-distributed training)')
     args = parser.parse_args()
+    print()
     return args
 
 
