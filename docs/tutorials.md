@@ -77,7 +77,7 @@ model = dict(
     ...)
 ```
 
-#### II. Add a new backbone:
+#### II. Add a new backbone
 
 **1. Define a new backbone**
 
