@@ -13,7 +13,7 @@ val_ann_file_path = 'test_time.txt'          # txt file for loading images (vali
 test_ann_file_path = 'test_time.txt'         # txt file for loading images, default = test.txt
 
 
-img_norm_cfg = dict(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))
+img_norm_cfg = dict(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))#zzn
 train_pipeline = [dict(type='LoadImageFromFile', gt_type='color', get_gt=True),
                   dict(type='RandomFlip', flip_ratio=0.5),
                   # dict(type='Pad', size_divisor=32, mode='resize'),
