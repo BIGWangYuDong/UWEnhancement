@@ -227,7 +227,7 @@ if __name__ == '__main__':
     save_epoch(model, optimizer, cfg.work_dir, epoch, ite_num)
     logger.info('Finish Training')
     #-----------------agh----------------------------------------------#
-    print()
+    print('agh')
 
     # import matplotlib.pyplot as plt
     # plt.plot(list(range(start_epoch-1, cfg.total_epoch)), lr_list)
