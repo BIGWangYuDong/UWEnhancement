@@ -8,7 +8,7 @@ We basically categorize model components into **backbone** and **Model(Network)*
 
 ### Develop new components
 
-#### I. Add a new Model:
+#### I. Add a new Model
 
 Here we show how to develop new Model(Network) with an example of  AANet.
 
@@ -77,7 +77,7 @@ model = dict(
     ...)
 ```
 
-#### II. Add a new backbone:
+#### II. Add a new backbone
 
 **1. Define a new backbone**
 
@@ -122,7 +122,7 @@ model = dict(
     ...)
 ```
 
-#### III. Add a new Pipeline:
+#### III. Add a new Pipeline
 
 **1. Define a new data pipeline**
 
@@ -160,7 +160,7 @@ test_pipeling = [...,
                  ...]
 ```
 
-#### IV. Add a new Loss function:
+#### IV. Add a new Loss function
 
 **1. Define a new loss function**
 
