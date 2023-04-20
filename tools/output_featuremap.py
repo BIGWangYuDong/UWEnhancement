@@ -12,9 +12,9 @@ sys.path.append(rootPath)
 
 import argparse
 import os.path as osp
-from UW.utils.read_file import Config
-from UW.core.Models import build_network
-from UW.utils import load
+from utils.read_file import Config
+from core.Models import build_network
+from utils import load
 
 
 def viz(module, input):

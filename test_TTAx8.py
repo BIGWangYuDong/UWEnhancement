@@ -12,15 +12,15 @@ from torch.nn.parallel import DataParallel
 import collections
 from torch.autograd import Variable
 import visdom
-from UW.utils import Config
-from UW.core.Models import build_network
-from UW.core.Datasets import build_dataset, build_dataloader
-from UW.core.Optimizer import build_optimizer, build_scheduler
-from UW.utils import (mkdir_or_exist, get_root_logger, normimage_test,
+from utils import Config
+from core.Models import build_network
+from core.Datasets import build_dataset, build_dataloader
+from core.Optimizer import build_optimizer, build_scheduler
+from utils import (mkdir_or_exist, get_root_logger, normimage_test,
                       save_epoch, save_latest, save_item, forward_x8,
                       resume, load)
 import numpy as np
-from UW.utils.save_image import (save_image, normimage,
+from utils.save_image import (save_image, normimage,
                                  save_ensemble_image, save_ensemble_image_8)
 
 '''
