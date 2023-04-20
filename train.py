@@ -33,7 +33,7 @@ def get_host_info():
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a detector')
-    parser.add_argument('--config',type=str, default='/home/dong/GitHub_Frame/UW/config/UWCNN.py',
+    parser.add_argument('--config',type=str, default='./config/UWCNN.py',
                         help='train config file path')
     parser.add_argument('--work_dir', help='the dir to save logs and models,')
     group_gpus = parser.add_mutually_exclusive_group()
@@ -67,6 +67,10 @@ if __name__ == '__main__':
         cfg.gpu_ids = args.gpu_ids
     else:
         cfg.gpu_ids = range(1) if args.gpus is None else range(args.gpus)
+
+    print(args)
+    print(cfg.pretty_text)
+    #exit()
 
     mata = dict()
 
