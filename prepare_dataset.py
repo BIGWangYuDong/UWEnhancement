@@ -53,6 +53,8 @@ def writeFiles(path: str, l: Iterable):
 def prepareDataset(args: argparse.Namespace):
     dataFiles = sorted(findCaseInsensitive(args.dataDir, args.ext))
     gtFiles = sorted(findCaseInsensitive(args.gtDir, args.ext))
+
+    print(len(dataFiles))
     checkFilenames(dataFiles, gtFiles)
 
     trainIdx = random.sample(range(len(dataFiles)), k=int(len(dataFiles)*0.8))
@@ -88,12 +90,10 @@ def prepareDataset(args: argparse.Namespace):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-
     parser.add_argument("--dataDir", type=str, default="../../../Data/EUVP/Paired/underwater_dark/trainA")
     parser.add_argument("--gtDir", default="../../../Data/EUVP/Paired/underwater_dark/trainB")
     parser.add_argument("--ext", default=[".jpg", ".jpeg", ".png"])
     parser.add_argument("--outDir", default="./DATA")
 
     args = parser.parse_args()
-
     prepareDataset(args)
