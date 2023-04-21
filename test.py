@@ -47,10 +47,10 @@ def get_host_info():
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a detector')
     parser.add_argument('--config',type=str,
-                        default='./config/UWCNN.py',
+                        default='./config/UIEC2Net.py',
                         help='train config file path')
     parser.add_argument('--load_from',
-                        default='./checkpoints/UWCNN/UWCNN_type3.pth',
+                        default='./checkpoints/UIEC2Net/UIEC2Net.pth',
                         help='the dir to save logs and models,')
     parser.add_argument('--savepath', help='the dir to save logs and models,')
     group_gpus = parser.add_mutually_exclusive_group()
@@ -90,6 +90,8 @@ if __name__ == '__main__':
         cfg.gpu_ids = range(1) if args.gpus is None else range(args.gpus)
 
     mata = dict()
+
+    print(cfg.pretty_text)
 
     # make dirs
     mkdir_or_exist(osp.abspath(cfg.savepath))
