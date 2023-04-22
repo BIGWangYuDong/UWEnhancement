@@ -1,4 +1,6 @@
-#checkpoints/
+checkpoints/**/tf_logs
+checkpoints/*/*
+!checkpoints/**/*.pth
 DATA/*
 results/*
 __pycache__
