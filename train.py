@@ -36,6 +36,8 @@ def parse_args():
     parser.add_argument('--config',type=str, default='./config/UIEC2Net.py',
                         help='train config file path')
     parser.add_argument('--work_dir', help='the dir to save logs and models,')
+    parser.add_argument("--visServer", type=str, default="http://localhost")
+    parser.add_argument("--visPort", type=int, default=8097)
     group_gpus = parser.add_mutually_exclusive_group()
     group_gpus.add_argument(
         '--gpus',
@@ -120,8 +122,8 @@ if __name__ == '__main__':
         len(cfg.gpu_ids))
     logger.info('-' * 20 + 'finish build dataloader' + '-' * 20)
 
-    visualizer = Visualizer()
-    vis = visdom.Visdom()
+    visualizer = Visualizer(server=args.visServer, port=args.visPort)
+    vis = visdom.Visdom(server=args.visServer, port=args.visPort)
     criterion_ssim_loss = build_loss(cfg.loss_ssim)
     # criterion_l1_loss = build_loss(cfg.loss_l1)
     # criterion_perc_loss = build_loss(cfg.loss_perc)
