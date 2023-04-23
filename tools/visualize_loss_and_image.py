@@ -1,5 +1,5 @@
 import visdom
-from UW.utils.Visualizer import Visualizer
+from utils.Visualizer import Visualizer
 import collections
 import random
 from PIL import Image

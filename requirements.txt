@@ -8,3 +8,4 @@ adict
 visdom==0.1.8.9
 opencv-python
 matplotlib	
+addict

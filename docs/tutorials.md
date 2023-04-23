@@ -19,9 +19,9 @@ Create a new file ``` core/Models/aanet.py```
 ```python
 import torch
 import torch.nn as nn
-from UW.core.Models.builder import NETWORK, build_backbone
-from UW.core.Models.base_model import BaseNet
-from UW.core.Models.weight_init import normal_init, xavier_init
+from core.Models.builder import NETWORK, build_backbone
+from core.Models.base_model import BaseNet
+from core.Models.weight_init import normal_init, xavier_init
 
 @NETWORK.register_module()
 class AANet(BaseNet):
@@ -87,8 +87,8 @@ Create a new file ``` core/Models/backbone/aabackbone.py```
 import torchvision.models as models
 import torch.nn as nn
 from collections import OrderedDict
-from UW.core.Models import BACKBONES
-from UW.core.Models.weight_init import normal_init
+from core.Models import BACKBONES
+from core.Models.weight_init import normal_init
 
 @BACKBONES.register_module()
 class AABackbone(nn.Module):
@@ -129,7 +129,7 @@ model = dict(
 Create a new file ``` core/Datasets/Pipelines/trans.py```
 
 ```python
-from UW.core.Datasets.builder import PIPELINES
+from core.Datasets.builder import PIPELINES
 
 @PIPELINES.register_module()
 class Pipeline(object):
@@ -169,7 +169,7 @@ Create a new file ``` core/Losses/a_loss.py```
 ```python
 import torch
 import torch.nn as nn
-from UW.core.Losses.builder import LOSSES
+from core.Losses.builder import LOSSES
 
 @LOSSES.register_module()
 class ALoss(nn.Module):
@@ -207,9 +207,9 @@ We are going to support unaligned dataset, if you need another loading dataset w
 Create a new file ``` core/Datasets/a_dataset.py```
 
 ```python
-from UW.core.Datasets.base_dataset import BaseDataset
-from UW.core.Datasets.builder import DATASETS
-from UW.core.Datasets.Pipelines import Compose
+from core.Datasets.base_dataset import BaseDataset
+from core.Datasets.builder import DATASETS
+from core.Datasets.Pipelines import Compose
 import copy
 
 @DATASETS.register_module()

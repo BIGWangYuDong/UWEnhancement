@@ -20,7 +20,7 @@ class Visualizer():
     It uses a Python library 'visdom' for display, and a Python library 'dominate' (wrapped in 'HTML') for creating HTML files with images.
     """
 
-    def __init__(self):
+    def __init__(self, server='http://localhost', port=8097):
         """Initialize the Visualizer class
 
         Parameters:
@@ -33,7 +33,7 @@ class Visualizer():
         self.display_id = 1
         self.use_html = True
         self.port = int(8097)
-        self.vis = visdom.Visdom(server='http://localhost', port=8097, env='main')
+        self.vis = visdom.Visdom(server=server, port=port, env='main')
 
     def reset(self):
         """Reset the self.saved status"""

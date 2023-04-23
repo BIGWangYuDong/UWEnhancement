@@ -1,16 +1,16 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from UW.core.Models.builder import NETWORK, build_backbone
-from UW.core.Models.base_model import BaseNet
-from UW.core.Models.weight_init import normal_init, xavier_init
+from core.Models.builder import NETWORK, build_backbone
+from core.Models.base_model import BaseNet
+from core.Models.weight_init import normal_init, xavier_init
 import sys
 import os
 curPath = os.path.abspath(os.path.dirname(__file__))
 rootPath = os.path.split(curPath)[0]
 sys.path.append(rootPath)
 
-from UW.core.Models import build_network
+from core.Models import build_network
 from tensorboardX import SummaryWriter
 
 

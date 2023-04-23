@@ -3,8 +3,8 @@ import torch.nn.functional as F
 import torch
 import os
 from torch.autograd import Variable
-from UW.core.Losses.builder import LOSSES
-from UW.core.Losses.utils import weighted_loss
+from core.Losses.builder import LOSSES
+from core.Losses.utils import weighted_loss
 
 
 class Vgg16(nn.Module):

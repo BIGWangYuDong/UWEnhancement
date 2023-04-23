@@ -12,9 +12,9 @@ sys.path.append(rootPath)
 
 import argparse
 import os.path as osp
-from UW.utils.read_file import Config
-from UW.core.Models import build_network
-from UW.utils import load
+from utils.read_file import Config
+from core.Models import build_network
+from utils import load
 
 
 def viz(module, input):
@@ -37,10 +37,10 @@ def viz(module, input):
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a detector')
     parser.add_argument('--config',type=str,
-                        default='/home/dong/GitHub_Frame/UW/config/UIEC2Net.py',
+                        default='./config/UIEC2Net.py',
                         help='train config file path')
     parser.add_argument('--load_from',
-                        default='/home/dong/GitHub_Frame/UW/checkpoints/UIEC2Net/UIEC2Net.pth',
+                        default='./checkpoints/UIEC2Net/UIEC2Net.pth',
                         help='the dir to save logs and models,')
     parser.add_argument('--work_dir', help='the dir to save logs and models,')
     parser.add_argument('--savepath', help='the dir to save logs and models,')
@@ -90,7 +90,7 @@ name_list = [
     # 'backbone.features.29'
 ]
 global output_root
-output_root = '/home/dong/GitHub_Frame/UW/results/UIEC2Net/featuremap/01.png'
+output_root = './results/UIEC2Net/featuremap/01.png'
 global feature_maps
 feature_maps = []
 for name, m in model.named_modules():
@@ -104,7 +104,7 @@ t = transforms.Compose([transforms.ToPILImage(),
                         # transforms.Resize((300, 300)),
                         transforms.ToTensor(),
                         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
-image_root = '/home/dong/GitHub_Frame/UW/DATA/Test/test/2_img_.png'
+image_root = './DATA/Test/test/2_img_.png'
 img = cv2.imread(image_root)
 img = t(img).unsqueeze(0).to(device)
 with torch.no_grad():

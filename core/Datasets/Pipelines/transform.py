@@ -20,6 +20,7 @@ class Resize(object):
         else:
             assert isinstance(img_scale, (int, tuple))
             self.img_scale = img_scale
+        self.do_ratio = False
         if ratio > 0 and keep_ratio is True:
             self.ratio = ratio
             self.do_ratio = True

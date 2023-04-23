@@ -11,16 +11,16 @@ import os.path as osp
 from torch.nn.parallel import DataParallel
 import collections
 import visdom
-from UW.utils.read_file import Config
-from UW.core.Models import build_network
-from UW.core.Datasets import build_dataset, build_dataloader
-from UW.core.Optimizer import build_optimizer, build_scheduler
-from UW.utils import (mkdir_or_exist, get_root_logger,
+from utils.read_file import Config
+from core.Models import build_network
+from core.Datasets import build_dataset, build_dataloader
+from core.Optimizer import build_optimizer, build_scheduler
+from utils import (mkdir_or_exist, get_root_logger,
                       save_epoch, save_latest, save_item,
                       resume, load)
-from UW.core.Losses import build_loss
-from UW.utils.Visualizer import Visualizer
-from UW.utils.save_image import normimage, normPRED
+from core.Losses import build_loss
+from utils.Visualizer import Visualizer
+from utils.save_image import normimage, normPRED
 
 from tensorboardX import SummaryWriter
 TORCH_VERSION = torch.__version__
@@ -33,9 +33,11 @@ def get_host_info():
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a detector')
-    parser.add_argument('--config',type=str, default='/home/dong/GitHub_Frame/UW/config/UWCNN.py',
+    parser.add_argument('--config',type=str, default='./config/UIEC2Net.py',
                         help='train config file path')
     parser.add_argument('--work_dir', help='the dir to save logs and models,')
+    parser.add_argument("--visServer", type=str, default="http://localhost")
+    parser.add_argument("--visPort", type=int, default=8097)
     group_gpus = parser.add_mutually_exclusive_group()
     group_gpus.add_argument(
         '--gpus',
@@ -67,6 +69,10 @@ if __name__ == '__main__':
         cfg.gpu_ids = args.gpu_ids
     else:
         cfg.gpu_ids = range(1) if args.gpus is None else range(args.gpus)
+
+    print(args)
+    print(cfg.pretty_text)
+    #exit()
 
     mata = dict()
 
@@ -116,8 +122,8 @@ if __name__ == '__main__':
         len(cfg.gpu_ids))
     logger.info('-' * 20 + 'finish build dataloader' + '-' * 20)
 
-    visualizer = Visualizer()
-    vis = visdom.Visdom()
+    visualizer = Visualizer(server=args.visServer, port=args.visPort)
+    vis = visdom.Visdom(server=args.visServer, port=args.visPort)
     criterion_ssim_loss = build_loss(cfg.loss_ssim)
     # criterion_l1_loss = build_loss(cfg.loss_l1)
     # criterion_perc_loss = build_loss(cfg.loss_perc)

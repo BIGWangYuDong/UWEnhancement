@@ -1,5 +1,5 @@
 import pytest
-from UW.core.Registry import Registry, build_from_cfg
+from core.Registry import Registry, build_from_cfg
 
 
 

@@ -13,16 +13,16 @@ import torch.nn as nn
 import collections
 from torch.autograd import Variable
 import visdom
-from UW.utils import Config
-from UW.core.Models import build_network
-from UW.core.Datasets import build_dataset, build_dataloader
-from UW.core.Optimizer import build_optimizer, build_scheduler
-from UW.utils import (mkdir_or_exist, get_root_logger,
+from utils import Config
+from core.Models import build_network
+from core.Datasets import build_dataset, build_dataloader
+from core.Optimizer import build_optimizer, build_scheduler
+from utils import (mkdir_or_exist, get_root_logger,
                       save_epoch, save_latest, save_item, load_part,
                       resume, load)
-from UW.core.Losses import build_loss
-from UW.utils.Visualizer import Visualizer
-from UW.utils.save_image import normimage, normPRED
+from core.Losses import build_loss
+from utils.Visualizer import Visualizer
+from utils.save_image import normimage, normPRED
 import numpy as np
 from apex import amp
 from apex.parallel import convert_syncbn_model
@@ -38,7 +38,7 @@ def get_host_info():
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a detector')
-    parser.add_argument('--config',type=str, default='/home/dong/GitHub_Frame/UW/config/UWCNN.py',
+    parser.add_argument('--config',type=str, default='./config/UWCNN.py',
                         help='train config file path')
     parser.add_argument('--work_dir', help='the dir to save logs and models,')
     group_gpus = parser.add_mutually_exclusive_group()
