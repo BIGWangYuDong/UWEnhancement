@@ -1,4 +1,4 @@
-from UW.core.Datasets.builder import PIPELINES
+from core.Datasets.builder import PIPELINES
 import torchvision.transforms as transforms
 import numpy as np
 import torch
@@ -12,34 +12,80 @@ import torchvision.transforms.functional as F
 class Resize(object):
     def __init__(self,
                  img_scale=None,
-                 keep_ratio=True
+                 ratio=0,
+                 keep_ratio=True,
+                 ugan_resize=False,
                  ):
         if img_scale is None:
             self.img_scale = None
         else:
             assert isinstance(img_scale, (int, tuple))
             self.img_scale = img_scale
+        if ratio > 0 and keep_ratio is True:
+            self.ratio = ratio
+            self.do_ratio = True
+        else:
+            self.do_ratio = False
+        self.ugan_resize = ugan_resize
         self.keep_ratio = keep_ratio
 
     def __call__(self, results):
         image = results['image']
-        if isinstance(self.img_scale, int):
-            h, w = self.img_scale, self.img_scale
+        if self.ugan_resize:
+            np_image = np.array(image).astype(np.float32)
+            shape = list(np_image.shape)
+            cmin = np_image.min()
+            cmax = np_image.max()
+
+            cscale = cmax - cmin
+            if cscale < 0:
+                raise ValueError("`cmax` should be larger than `cmin`.")
+            elif cscale == 0:
+                cscale = 1
+            scale = float(255 - 0) / cscale
+            bytedata = (np_image - cmin) * scale + 0
+            np_image = (bytedata.clip(0, 255) + 0.5).astype(np.uint8)
+            strdata = np_image.tostring()
+            img_shape = (shape[1], shape[0])
+            image = Image.frombytes('RGB', img_shape, strdata)
+            resize_image = image.resize(size=self.img_scale)
+            results['image'] = resize_image
+            return results
+        elif self.do_ratio:
+            w = image.size[0] * self.ratio
+            h = image.size[1] * self.ratio
+            osize = [int(h), int(w)]
+            transform = transforms.Resize(osize)
+            results['image'] = transform(image)
+            if 'gt' in results:
+                gt = results['gt']
+                results['gt'] = transform(gt)
+            if 'ce_image' and 'gc_image' and 'wb_image' in results:
+                ce_image = results['ce_image']
+                gc_image = results['gc_image']
+                wb_image = results['wb_image']
+                results['ce_image'] = transform(ce_image)
+                results['gc_image'] = transform(gc_image)
+                results['wb_image'] = transform(wb_image)
         else:
-            h, w = self.img_scale
-        osize = [h, w]
-        transform = transforms.Resize(osize)
-        results['image'] = transform(image)
-        if 'gt' in results:
-            gt = results['gt']
-            results['gt'] = transform(gt)
-        if 'ce_image' and 'gc_image' and 'wb_image' in results:
-            ce_image = results['ce_image']
-            gc_image = results['gc_image']
-            wb_image = results['wb_image']
-            results['ce_image'] = transform(ce_image)
-            results['gc_image'] = transform(gc_image)
-            results['wb_image'] = transform(wb_image)
+            if isinstance(self.img_scale, int):
+                h, w = self.img_scale, self.img_scale
+            else:
+                h, w = self.img_scale
+            osize = [h, w]
+            # TODO: UWGAN using `from scipy import misc`, misc.resize, which will use bytescale
+            transform = transforms.Resize(osize)
+            results['image'] = transform(image)
+            if 'gt' in results:
+                gt = results['gt']
+                results['gt'] = transform(gt)
+            if 'ce_image' and 'gc_image' and 'wb_image' in results:
+                ce_image = results['ce_image']
+                gc_image = results['gc_image']
+                wb_image = results['wb_image']
+                results['ce_image'] = transform(ce_image)
+                results['gc_image'] = transform(gc_image)
+                results['wb_image'] = transform(wb_image)
 
         return results
 
